@@ -9,6 +9,7 @@ def main():
     location = input("Enter location (e.g., New York, USA): ").strip()
     api_key = input("Enter your SerpAPI key: ").strip()
     max_results = input("How many leads do you want? (e.g., 30): ").strip()
+    filename = input("Enter output filename (default: leads.csv): ").strip()
 
     if not max_results.isdigit():
         print("Invalid number. Defaulting to 30 leads.")
@@ -16,17 +17,24 @@ def main():
     else:
         max_results = int(max_results)
 
+    if not filename:
+        filename = "leads.csv"
+
     print(f"[👀] Searching LinkedIn profiles for '{keyword}' in '{location}' ...")
 
-    leads = get_leads_from_linkedin(keyword, location, api_key, max_results=max_results)
+    try:
+        leads = get_leads_from_linkedin(keyword, location, api_key, max_results=max_results)
+    except Exception as e:
+        print(f"[✖] Failed to fetch leads: {e}")
+        return
 
     if leads:
-        print(f"[💾] Exporting {len(leads)} leads to CSV...")
-        export_leads_to_csv(leads)
+        print(f"[💾] Exporting {len(leads)} leads to {filename}...")
+        export_leads_to_csv(leads, filename=filename)
     else:
         print("[⚠️] No leads found!")
 
-    print("[✅] Done! Check leads.csv")
+    print("[✅] Done!")
 
 if __name__ == "__main__":
     main()

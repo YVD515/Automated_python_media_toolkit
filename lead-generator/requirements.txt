@@ -1,0 +1,2 @@
+pip install ttkbootstrap fpdf requests pandas
+1. serpapi API key

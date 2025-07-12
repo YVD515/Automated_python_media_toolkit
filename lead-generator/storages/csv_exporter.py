@@ -11,3 +11,4 @@ def export_leads_to_csv(leads: list[Lead], filename="leads.csv"):
         print(f"[✔] Exported {len(leads)} leads to {filename}")
     except Exception as e:
         print(f"[✖] Failed to export leads: {e}")
+    
